@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Учимся с компьютером</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html"><span class="logo" id="logo"></span>Учимся с компьютером</a>
+    <span class="pill" id="level"></span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="tag" id="tag"></span>
+      <h1>Стань мастером компьютера</h1>
+      <p class="lead">Короткие уроки про Windows, Word, Excel, PowerPoint и Outlook. В конце каждого — маленький тест и новая звезда.</p>
+      <a class="btn" id="go" href="#"></a>
+    </div>
+    <div class="art">
+      <div class="win" style="left:10px;top:60px;transform:rotate(-6deg)"><div class="bar-t" style="background:#16a34a"><i></i><i></i></div><div class="body"><div class="cells"><i class="g"></i><i class="g"></i><i class="g"></i><i class="g"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+      <div class="win" style="left:130px;top:10px;transform:rotate(5deg)"><div class="bar-t" style="background:#4f46e5"><i></i><i></i></div><div class="body"><div class="ln h"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:88%"></div></div></div>
+      <div class="win" style="left:70px;top:150px;transform:rotate(-2deg)"><div class="bar-t" style="background:#ea580c"><i></i><i></i></div><div class="body" style="flex-direction:row;align-items:center;gap:12px"><div style="width:80px;height:56px;background:#ffedd5;border-radius:8px;flex:none"></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div class="ln h" style="width:70%"></div><div class="ln"></div><div class="ln" style="width:60%"></div></div></div></div>
+    </div>
+  </section>
+
+  <h2 class="section-title">Пять миров</h2>
+  <div class="worlds" id="worlds"></div>
+
+  <div id="paths"></div>
+
+  <p class="foot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg>Нажми на урок, чтобы начать. Зелёный кружок — урок пройден, синий — ты здесь.</p>
+</div>
+
+<script src="lessons.js"></script>
+<script>
+  const done = getDone();
+  const isDone = l => done.includes(l.id);
+  const of = s => LESSONS.filter(l => l.section === s.id);
+  const next = LESSONS.find(l => !isDone(l));
+  const n = LESSONS.filter(isDone).length;
+  const level = SECTIONS.filter(s => of(s).every(isDone)).length + 1;
+
+  document.getElementById('logo').innerHTML = SECTIONS[0].icon;
+  document.getElementById('level').innerHTML =
+    `<svg width="18" height="18" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+     Уровень ${level} <span style="color:#8a8f9e">·</span> ${n} из ${LESSONS.length} уроков`;
+  document.getElementById('tag').textContent = `${LESSONS.length} уроков · ${SECTIONS.length} программ`;
+
+  const go = document.getElementById('go');
+  if (next) {
+    go.href = `lessons/${next.id}.html`;
+    go.style.setProperty('--c', SECTIONS.find(s => s.id === next.section).color);
+    go.innerHTML = `${n ? 'Продолжить' : 'Начать'}: ${next.title} <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+  } else {
+    go.href = 'lessons/w1.html'; go.textContent = 'Все уроки пройдены! Повторить с начала';
+  }
+
+  document.getElementById('worlds').innerHTML = SECTIONS.map(s => {
+    const ls = of(s), d = ls.filter(isDone).length;
+    return `<a class="world" href="#${s.id}" style="--c:${s.color}">${s.icon}<b>${s.title}</b><small>${ls.length} ${ls.length === 1 ? 'урок' : ls.length < 5 ? 'урока' : 'уроков'}</small>
+      <div class="bar"><i style="width:${100 * d / ls.length}%"></i></div><span class="n">${d} из ${ls.length}</span></a>`;
+  }).join('');
+
+  document.getElementById('paths').innerHTML = SECTIONS.map((s, si) => {
+    const ls = of(s), d = ls.filter(isDone).length;
+    return `<section class="panel" id="${s.id}" style="--c:${s.color}">
+      <div class="head"><h2>${s.icon}Мир ${si + 1} · ${s.title}</h2><span class="cnt">${d} из ${ls.length} пройдено</span></div>
+      <div class="path">${ls.map((l, i) => {
+        const cls = isDone(l) ? 'done' : (next && next.id === l.id ? 'now' : '');
+        const link = i ? `<div class="link ${isDone(ls[i - 1]) ? 'done' : ''}"></div>` : '';
+        const dot = isDone(l)
+          ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>'
+          : i + 1;
+        return `${link}<a class="node ${cls}" href="lessons/${l.id}.html"><span class="dot">${dot}</span><span>${cls === 'now' ? 'Ты здесь: ' : ''}${l.title}</span></a>`;
+      }).join('')}</div>
+    </section>`;
+  }).join('');
+</script>
+</body>
+</html>
