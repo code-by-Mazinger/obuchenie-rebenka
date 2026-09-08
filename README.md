@@ -14,6 +14,8 @@
 
 Картинки и скриншоты клади в папку `img/` и вставляй так: `<img src="../img/name.png" alt="...">`.
 
+Схемы-иллюстрации (`img/*.svg`) рисует скрипт `tools/schemes.py`: поправил координаты или текст — запусти `python3 tools/schemes.py`, и все картинки перерисуются.
+
 ## Сайт в интернете
 
 Репозиторий: https://github.com/code-by-Mazinger/obuchenie-rebenka
