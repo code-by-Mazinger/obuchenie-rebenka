@@ -108,6 +108,8 @@ code { background: #fff; border: 1px solid var(--line); border-radius: 6px; padd
 .q input { width: 20px; height: 20px; margin-right: 8px; vertical-align: -3px; accent-color: var(--c); }
 .q.ok { border-color: var(--ok); background: #eefaf2; }
 .q.bad { border-color: var(--bad); background: #fdeeee; }
+.q .why { margin: 8px 0 0; padding: 10px 14px; background: #fff; border: 2px dashed var(--bad); border-radius: 10px; font-size: 17px; }
+.q input:disabled + * , .q:has(input:disabled) label { cursor: default; }
 .result { font-weight: 800; font-size: 20px; min-height: 1.6em; }
 .result.ok { color: var(--ok); }
 .pager { display: flex; justify-content: space-between; gap: 16px; margin: 36px 0 60px; flex-wrap: wrap; }
