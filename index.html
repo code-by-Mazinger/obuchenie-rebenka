@@ -32,7 +32,7 @@
 
   <div id="paths"></div>
 
-  <p class="foot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg>Нажми на урок, чтобы начать. Зелёный кружок — урок пройден, синий — ты здесь.</p>
+  <p class="foot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg>Зелёный кружок — урок пройден, синий — ты здесь. Замок откроется, когда сдашь тест предыдущего урока.</p>
 </div>
 
 <script src="lessons.js"></script>
@@ -70,12 +70,18 @@
     return `<section class="panel" id="${s.id}" style="--c:${s.color}">
       <div class="head"><h2>${s.icon}Мир ${si + 1} · ${s.title}</h2><span class="cnt">${d} из ${ls.length} пройдено</span></div>
       <div class="path">${ls.map((l, i) => {
-        const cls = isDone(l) ? 'done' : (next && next.id === l.id ? 'now' : '');
+        // Открыты только пройденные уроки и первый непройденный. Остальные заперты, пока не сдан тест.
+        const cls = isDone(l) ? 'done' : (next && next.id === l.id ? 'now' : 'locked');
         const link = i ? `<div class="link ${isDone(ls[i - 1]) ? 'done' : ''}"></div>` : '';
         const dot = isDone(l)
           ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>'
+          : cls === 'locked'
+          ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
           : i + 1;
-        return `${link}<a class="node ${cls}" href="lessons/${l.id}.html"><span class="dot">${dot}</span><span>${cls === 'now' ? 'Ты здесь: ' : ''}${l.title}</span></a>`;
+        const body = `<span class="dot">${dot}</span><span>${cls === 'now' ? 'Ты здесь: ' : ''}${l.title}</span>`;
+        return link + (cls === 'locked'
+          ? `<span class="node locked" title="Сначала пройди предыдущие уроки">${body}</span>`
+          : `<a class="node ${cls}" href="lessons/${l.id}.html">${body}</a>`);
       }).join('')}</div>
     </section>`;
   }).join('');

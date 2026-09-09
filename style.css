@@ -71,6 +71,9 @@ a { color: var(--c); }
 .node:hover .dot { border-color: var(--ink); color: var(--ink); }
 .node.done { color: var(--ink); }
 .node.done .dot { background: var(--ok); border-color: var(--ink); color: #fff; }
+.node.locked { cursor: not-allowed; opacity: .7; }
+.node.locked .dot { background: #f1f2f6; color: #b0b4c2; }
+.node.locked:hover .dot { border-color: var(--line); color: #b0b4c2; }
 .node.now { color: var(--c); font-weight: 800; }
 .node.now .dot { background: var(--c); border-color: var(--ink); color: #fff; animation: pulse 1.6s ease-out infinite; }
 .link { flex: 1 1 20px; border-top: 3px dashed var(--line); margin-top: 27px; }
