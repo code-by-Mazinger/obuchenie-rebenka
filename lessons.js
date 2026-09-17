@@ -1,16 +1,18 @@
 // Единственный список уроков. Добавил урок сюда и создал файл lessons/<id>.html — он появится везде.
 const ICON = (d) => `<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 
+// Цвета подобраны так, чтобы белый текст на них и они сами на светлом фоне
+// давали контраст не ниже 4.5:1 (проверено расчётом, см. гайды в CLAUDE.md).
 const SECTIONS = [
-  { id: 'win',     title: 'Windows',    color: '#2f6df6', desc: 'Компьютер, окна, файлы и папки',
+  { id: 'win',     title: 'Windows',    color: '#2c66e7', desc: 'Компьютер, окна, файлы и папки',
     icon: ICON('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>') },
   { id: 'word',    title: 'Word',       color: '#4f46e5', desc: 'Пишем и оформляем тексты',
     icon: ICON('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h6"/>') },
-  { id: 'excel',   title: 'Excel',      color: '#16a34a', desc: 'Таблицы, которые сами считают',
+  { id: 'excel',   title: 'Excel',      color: '#12823b', desc: 'Таблицы, которые сами считают',
     icon: ICON('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/>') },
-  { id: 'ppt',     title: 'PowerPoint', color: '#ea580c', desc: 'Делаем презентации',
+  { id: 'ppt',     title: 'PowerPoint', color: '#c0480a', desc: 'Делаем презентации',
     icon: ICON('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v5M8 21h8M7 12l3-3 2 2 4-4"/>') },
-  { id: 'outlook', title: 'Outlook',    color: '#0ea5e9', desc: 'Электронная почта, календарь и дела',
+  { id: 'outlook', title: 'Outlook',    color: '#0a77a8', desc: 'Электронная почта, календарь и дела',
     icon: ICON('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>') },
   { id: 'ai',      title: 'ИИ',         color: '#9333ea', desc: 'Как спрашивать, что нельзя отправлять, как проверять',
     icon: ICON('<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M2 13h2M20 13h2M9 14h.01M15 14h.01"/>') },

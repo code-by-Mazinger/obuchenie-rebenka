@@ -2,7 +2,7 @@
 import os
 
 INK, YEL, MUTED, CREAM = '#1c1f2e', '#ffd84d', '#8a8f9e', '#fbf6ec'
-C = {'win': '#2f6df6', 'word': '#4f46e5', 'excel': '#16a34a', 'ppt': '#ea580c', 'ai': '#9333ea'}
+C = {'win': '#2c66e7', 'word': '#4f46e5', 'excel': '#12823b', 'ppt': '#c0480a', 'ai': '#9333ea'}
 BAD, OK = '#d94848', '#16a34a'
 FONT = "Nunito, 'Segoe UI', system-ui, sans-serif"
 OUT = os.path.join(os.path.dirname(__file__), '..', 'img')
