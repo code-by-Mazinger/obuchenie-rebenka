@@ -41,17 +41,16 @@ if (typeof document !== 'undefined') (function () {
     </section>
     <nav class="pager">
       ${prev ? `<a href="${prev.id}.html">← ${prev.title}</a>` : ''}
-      ${next ? `<a class="next" id="next" href="${next.id}.html" hidden>${next.title} ${arrow}</a>` : '<a class="next" id="next" href="../index.html" hidden>На главную</a>'}
+      ${next ? `<a class="next" id="next" href="${next.id}.html">${next.title} ${arrow}</a>` : '<a class="next" id="next" href="../index.html">На главную</a>'}
     </nav>`);
 
   const result = document.getElementById('result');
-  const check = document.getElementById('check'), retry = document.getElementById('retry'), nextLink = document.getElementById('next');
+  const check = document.getElementById('check'), retry = document.getElementById('retry');
   const inputs = [...document.querySelectorAll('.q input')];
   const qEls = [...document.querySelectorAll('.q')];
 
-  // «Дальше» появляется только у сданного теста — сейчас или в прошлый раз.
-  const unlock = () => { nextLink.hidden = false; };
-  if (getDone().includes(id)) { result.textContent = 'Этот урок ты уже прошёл. Можно повторить!'; result.className = 'result ok'; unlock(); }
+  // Темы разные, поэтому «дальше» открыт всегда: тест нужен для звезды, а не для пропуска вперёд.
+  if (getDone().includes(id)) { result.textContent = 'Этот урок ты уже прошёл. Можно повторить!'; result.className = 'result ok'; }
 
   check.onclick = () => {
     const answers = questions.map((_, qi) => {
@@ -69,7 +68,7 @@ if (typeof document !== 'undefined') (function () {
     const right = res.filter(Boolean).length;
     if (right === questions.length) {
       const isNew = !getDone().includes(id);
-      markDone(id); unlock();
+      markDone(id);
       // Награды: звезда за новый урок, медаль, если этот урок закрыл мир, кубок, если закрыты все.
       const done = getDone();
       const worldDone = inSection.every(l => done.includes(l.id));
