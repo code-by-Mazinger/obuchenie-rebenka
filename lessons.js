@@ -15,7 +15,7 @@ const SECTIONS = [
 ];
 
 const LESSONS = [
-  { id: 'w1', section: 'win',   title: 'Включаем компьютер и смотрим на рабочий стол' },
+  { id: 'w1', section: 'win',   title: 'Рабочий стол: значки и панель задач' },
   { id: 'w2', section: 'win',   title: 'Мышь и клавиатура' },
   { id: 'w3', section: 'win',   title: 'Окна: открыть, свернуть, закрыть' },
   { id: 'w4', section: 'win',   title: 'Файлы и папки' },
