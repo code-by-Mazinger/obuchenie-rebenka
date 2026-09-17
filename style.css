@@ -79,6 +79,26 @@ a { color: var(--c); }
 .win .cells i { height: 20px; border-radius: 4px; background: #f1f5f9; }
 .win .cells i.g { background: #dcfce7; }
 
+/* главная: награды */
+.awards { margin-bottom: 40px; }
+.awards .head { margin-bottom: 18px; }
+.stars { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+.star svg { width: 30px; height: 30px; fill: #eceef3; stroke: var(--line); }
+.star.on svg { fill: var(--yellow); stroke: var(--ink); animation: pop .4s ease-out both; }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+.medals { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 22px; }
+.medal { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; color: var(--muted); }
+.medal .coin { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font-size: 32px; background: #f1f2f6; border: 2px dashed var(--line); color: #b0b4c2; }
+.medal b { font-family: Unbounded, "Arial Black", sans-serif; font-size: 14px; margin-top: 10px; }
+.medal.won { color: var(--ink); }
+.medal.won .coin { background: var(--c); border: 2px solid var(--ink); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.medal.won small { color: var(--c); font-weight: 800; }
+.trophy { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px dashed var(--line); border-radius: 16px; color: var(--muted); font-size: 16px; }
+.trophy .cup { font-size: 34px; display: grid; place-items: center; }
+.trophy .cup.won { font-size: 44px; }
+.trophy:has(.won) { border: 2px solid var(--ink); background: var(--yellow); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.trophy b { font-family: Unbounded, "Arial Black", sans-serif; margin-right: 6px; }
+
 /* главная: миры */
 .section-title { font-size: 22px; margin: 0 0 16px; }
 .worlds { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 40px; }
@@ -158,6 +178,8 @@ code { background: #fff; border: 1px solid var(--line); border-radius: 6px; padd
   .hero h1 { font-size: 34px; }
   .art { display: none; }
   .worlds { grid-template-columns: repeat(2, 1fr); }
+  .medals { grid-template-columns: repeat(3, 1fr); gap: 18px 8px; }
+  .star svg { width: 24px; height: 24px; }
   .panel { padding: 20px; }
   .path { flex-direction: column; align-items: stretch; }
   .node { flex-direction: row; flex-basis: auto; text-align: left; font-size: 15px; gap: 14px; }

@@ -10,7 +10,7 @@
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html"><span class="logo" id="logo"></span>Учимся с компьютером</a>
-    <span class="pill" id="level"></span>
+    <a class="pill" id="level" href="#awards" style="color:inherit;text-decoration:none"></a>
   </header>
 
   <section class="hero">
@@ -25,6 +25,13 @@
       <div class="win" style="left:130px;top:10px;transform:rotate(5deg)"><div class="bar-t" style="background:#4f46e5"><i></i><i></i></div><div class="body"><div class="ln h"></div><div class="ln" style="width:90%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:88%"></div></div></div>
       <div class="win" style="left:70px;top:150px;transform:rotate(-2deg)"><div class="bar-t" style="background:#ea580c"><i></i><i></i></div><div class="body" style="flex-direction:row;align-items:center;gap:12px"><div style="width:80px;height:56px;background:#ffedd5;border-radius:8px;flex:none"></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div class="ln h" style="width:70%"></div><div class="ln"></div><div class="ln" style="width:60%"></div></div></div></div>
     </div>
+  </section>
+
+  <section class="panel awards" id="awards">
+    <div class="head"><h2><svg width="1em" height="1em" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>Мои награды</h2><span class="cnt" id="awards-cnt"></span></div>
+    <div class="stars" id="stars"></div>
+    <div class="medals" id="medals"></div>
+    <div class="trophy" id="trophy"></div>
   </section>
 
   <h2 class="section-title">Пять миров</h2>
@@ -58,6 +65,23 @@
   } else {
     go.href = 'lessons/w1.html'; go.textContent = 'Все уроки пройдены! Повторить с начала';
   }
+
+  // Награды: звезда за урок, медаль за мир, кубок за всё.
+  const STAR = '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+  const medals = SECTIONS.filter(s => of(s).every(isDone)).length;
+  document.getElementById('awards-cnt').textContent = `${n} ${n === 1 ? 'звезда' : n > 1 && n < 5 ? 'звезды' : 'звёзд'} · ${medals} из ${SECTIONS.length} медалей`;
+  document.getElementById('stars').innerHTML = LESSONS.map(l =>
+    `<span class="star ${isDone(l) ? 'on' : ''}" title="${l.title}">${STAR}</span>`).join('');
+  document.getElementById('medals').innerHTML = SECTIONS.map(s => {
+    const ls = of(s), d = ls.filter(isDone).length, won = d === ls.length;
+    return `<div class="medal ${won ? 'won' : ''}" style="--c:${s.color}">
+      <span class="coin">${s.icon}</span><b>${s.title}</b>
+      <small>${won ? 'Медаль твоя!' : `Ещё ${ls.length - d} ${ls.length - d === 1 ? 'урок' : ls.length - d < 5 ? 'урока' : 'уроков'}`}</small>
+    </div>`;
+  }).join('');
+  document.getElementById('trophy').innerHTML = medals === SECTIONS.length
+    ? `<span class="cup won"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span><b>Мастер компьютера!</b> Все медали собраны.`
+    : `<span class="cup"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span>Собери все ${SECTIONS.length} медалей и получи кубок «Мастер компьютера».`;
 
   document.getElementById('worlds').innerHTML = SECTIONS.map(s => {
     const ls = of(s), d = ls.filter(isDone).length;

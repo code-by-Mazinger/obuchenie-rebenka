@@ -68,8 +68,18 @@ if (typeof document !== 'undefined') (function () {
     });
     const right = res.filter(Boolean).length;
     if (right === questions.length) {
+      const isNew = !getDone().includes(id);
       markDone(id); unlock();
-      result.textContent = `Всё верно! Урок пройден.${next ? ' Жми «дальше» внизу.' : ' Ты прошёл все уроки!'}`;
+      // Награды: звезда за новый урок, медаль, если этот урок закрыл мир, кубок, если закрыты все.
+      const done = getDone();
+      const worldDone = inSection.every(l => done.includes(l.id));
+      const allDone = LESSONS.every(l => done.includes(l.id));
+      const star = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round" style="vertical-align:-4px"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+      const award = !isNew ? 'Урок пройден.'
+        : allDone ? `${star} Новая звезда, медаль «${sec.title}» и кубок «Мастер компьютера»!`
+        : worldDone ? `${star} Новая звезда и медаль «${sec.title}»!`
+        : `${star} Новая звезда!`;
+      result.innerHTML = `Всё верно! ${award} <a href="../index.html#awards">Мои награды</a>${next && !allDone ? ' · жми «дальше» внизу.' : ''}`;
       result.className = 'result ok';
     } else {
       // Ответы замораживаем: чтобы идти дальше, тест надо пройти заново целиком.
