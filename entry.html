@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Входной тест</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header></header>
+<main>
+<h1>С чего начать</h1>
+<p class="lead">Восемь вопросов из разных миров. Тест покажет, что ты уже знаешь, и посоветует, с какого урока начать. Прогресс он не меняет и оценок не ставит.</p>
+</main>
+
+<script src="lessons.js"></script>
+<script>
+  window.EXAM = {
+    title: 'Входной тест',
+    badge: 'Входной тест · 8 вопросов',
+    heading: 'Проверим, что ты уже умеешь',
+    questions: [
+      { section: 'win', q: 'Как открыть программу со значка на рабочем столе?', a: ['Один клик левой кнопкой', 'Двойной клик левой кнопкой', 'Клик правой кнопкой'], right: 1 },
+      { section: 'win', q: 'Куда попадает файл, если нажать Delete?', a: ['Исчезает навсегда', 'В Корзину', 'В папку «Загрузки»'], right: 1 },
+      { section: 'win', q: 'Что делает сочетание Ctrl + S?', a: ['Сохраняет работу', 'Закрывает окно', 'Выделяет всё'], right: 0 },
+      { section: 'word', q: 'Чем в Word делают текст жирным?', a: ['Кнопкой Ж или Ctrl + B', 'Клавишей Enter', 'Кнопкой «Печать»'], right: 0 },
+      { section: 'excel', q: 'С чего начинается формула в Excel?', a: ['Со скобки', 'Со знака =', 'С буквы Ф'], right: 1 },
+      { section: 'ppt', q: 'Что такое слайд в PowerPoint?', a: ['Одна страница презентации', 'Название файла', 'Кнопка выхода'], right: 0 },
+      { section: 'outlook', q: 'Для чего нужна тема письма?', a: ['Чтобы сразу было понятно, о чём письмо', 'Чтобы письмо дошло быстрее', 'Это необязательное украшение'], right: 0 },
+      { section: 'ai', q: 'Можно ли отправлять ИИ свой пароль?', a: ['Можно, он же программа', 'Нельзя никогда', 'Можно, если попросит'], right: 1 }
+    ],
+    levels: [
+      { min: 0, title: 'Начинаем с самого начала', text: 'Пока знакомого мало — и это нормально. Пройди миры по порядку, с первого урока.' },
+      { min: 0.5, title: 'Кое-что уже знаешь', text: 'Основы знакомы. Пройди уроки по порядку, знакомые места проскочишь быстро.' },
+      { min: 0.85, title: 'Уверенный пользователь', text: 'Ты уже многое умеешь. Пройди тесты уроков, а подробно читай только то, где ошибся.' }
+    ],
+    advice(weakest) {
+      const done = getDone();
+      const next = LESSONS.find(l => !done.includes(l.id)) || LESSONS[0];
+      const byId = Object.fromEntries(SECTIONS.map(s => [s.id, s]));
+      const weakNames = weakest.map(id => byId[id] && byId[id].title).filter(Boolean);
+      return (weakNames.length
+          ? `<p>Стоит обратить внимание на миры: <b>${weakNames.join(', ')}</b>.</p>`
+          : '<p>Ошибок нет — можно идти по порядку и сразу пробовать тесты уроков.</p>') +
+        `<p><a class="btn" href="lessons/${next.id}.html">Начать урок: ${next.title}</a></p>`;
+    }
+  };
+</script>
+<script src="exam.js"></script>
+</body>
+</html>

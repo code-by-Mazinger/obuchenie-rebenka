@@ -111,6 +111,21 @@ a { color: var(--c); }
 .bar i { display: block; height: 100%; background: var(--yellow); }
 .world .n { font-size: 13px; font-weight: 800; }
 
+/* тесты: входной и итоговый */
+.hero-tests { margin: 14px 0 0; font-size: 15px; color: var(--muted); }
+.hero-tests a { font-weight: 800; }
+.exams { margin-bottom: 28px; }
+.exam-links { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.exam-card { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: 16px; box-shadow: 4px 4px 0 var(--ink); padding: 16px 18px; transition: transform .1s, box-shadow .1s; }
+.exam-card:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.exam-card b { font-family: Unbounded, "Arial Black", sans-serif; font-size: 16px; }
+.exam-card small { color: var(--muted); font-size: 14px; line-height: 1.4; }
+.exam-note { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+.exam-result { margin-top: 16px; }
+.exam-result h3 { font-family: Unbounded, "Arial Black", sans-serif; font-size: 20px; margin: 10px 0 8px; }
+.exam-result p { margin: 8px 0; }
+.exam-result .btn { margin-top: 6px; }
+
 /* главная: дорожки уроков */
 .panel { background: var(--paper); border: 2px solid var(--ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); padding: 26px 30px 30px; margin: 0 0 28px; }
 .panel .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
@@ -179,6 +194,7 @@ code { background: #fff; border: 1px solid var(--line); border-radius: 6px; padd
   .art { display: none; }
   .worlds { grid-template-columns: repeat(2, 1fr); }
   .medals { grid-template-columns: repeat(3, 1fr); gap: 18px 8px; }
+  .exam-links { grid-template-columns: 1fr; }
   .star svg { width: 24px; height: 24px; }
   .panel { padding: 20px; }
   .path { flex-direction: column; align-items: stretch; }

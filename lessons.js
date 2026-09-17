@@ -12,6 +12,8 @@ const SECTIONS = [
     icon: ICON('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v5M8 21h8M7 12l3-3 2 2 4-4"/>') },
   { id: 'outlook', title: 'Outlook',    color: '#0ea5e9', desc: 'Электронная почта, календарь и дела',
     icon: ICON('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>') },
+  { id: 'ai',      title: 'ИИ',         color: '#9333ea', desc: 'Как спрашивать, что нельзя отправлять, как проверять',
+    icon: ICON('<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M2 13h2M20 13h2M9 14h.01M15 14h.01"/>') },
 ];
 
 const LESSONS = [
@@ -38,7 +40,25 @@ const LESSONS = [
   { id: 'p3', section: 'ppt',   title: 'Показываем презентацию' },
 
   { id: 'o1', section: 'outlook', title: 'Outlook: почта, календарь, контакты и задачи' },
+
+  { id: 'a1', section: 'ai', title: 'Что такое ИИ и как он отвечает' },
+  { id: 'a2', section: 'ai', title: 'Как спросить, чтобы получить хороший ответ' },
+  { id: 'a3', section: 'ai', title: 'ИИ ошибается: проверяй ответы' },
+  { id: 'a4', section: 'ai', title: 'Что нельзя отправлять ИИ' },
+  { id: 'a5', section: 'ai', title: 'ИИ — помощник, а не тот, кто учится за тебя' },
 ];
+
+// Склонение: 1 урок, 2 урока, 5 уроков, 11 уроков, 24 урока.
+function plural(n, one, few, many) {
+  const mod100 = n % 100, mod10 = n % 10;
+  if (mod100 >= 11 && mod100 <= 14) return many;
+  if (mod10 === 1) return one;
+  if (mod10 >= 2 && mod10 <= 4) return few;
+  return many;
+}
+function lessonsWord(n) { return plural(n, 'урок', 'урока', 'уроков'); }
+// «из 24 уроков», но «из 21 урока» — после «из» нужен родительный падеж
+function lessonsOf(n) { return n % 10 === 1 && n % 100 !== 11 ? 'урока' : 'уроков'; }
 
 // Прогресс хранится в браузере. localStorage может быть недоступен (приватное окно) — тогда просто ничего не помним.
 function getDone() { try { return JSON.parse(localStorage.getItem('done') || '[]'); } catch { return []; } }

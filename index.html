@@ -19,6 +19,7 @@
       <h1>Стань мастером компьютера</h1>
       <p class="lead">Короткие уроки про Windows, Word, Excel, PowerPoint и Outlook. В конце каждого — маленький тест и новая звезда.</p>
       <a class="btn" id="go" href="#"></a>
+      <p class="hero-tests"><a href="entry.html">Не знаешь, с чего начать? Пройди входной тест</a> · <a href="final.html">Итоговый тест</a></p>
     </div>
     <div class="art">
       <div class="win" style="left:10px;top:60px;transform:rotate(-6deg)"><div class="bar-t" style="background:#16a34a"><i></i><i></i></div><div class="body"><div class="cells"><i class="g"></i><i class="g"></i><i class="g"></i><i class="g"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
@@ -34,10 +35,25 @@
     <div class="trophy" id="trophy"></div>
   </section>
 
-  <h2 class="section-title">Пять миров</h2>
+  <h2 class="section-title" id="worlds-title"></h2>
   <div class="worlds" id="worlds"></div>
 
   <div id="paths"></div>
+
+  <section class="panel exams">
+    <div class="head"><h2>Проверить себя</h2></div>
+    <div class="exam-links">
+      <a class="exam-card" href="entry.html">
+        <b>Входной тест</b>
+        <small>8 вопросов из разных миров. Покажет, что ты уже знаешь, и подскажет, с какого урока начать.</small>
+      </a>
+      <a class="exam-card" href="final.html">
+        <b>Итоговый тест</b>
+        <small>12 вопросов по всем шести мирам. Проходи, когда закончишь уроки, или просто чтобы вспомнить.</small>
+      </a>
+    </div>
+    <p class="exam-note">Тесты ничего не меняют в прогрессе: звёзды и медали дают только уроки.</p>
+  </section>
 
   <p class="foot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg>Зелёный кружок — урок пройден, синий — ты здесь. Замок откроется, когда сдашь тест предыдущего урока.</p>
 </div>
@@ -54,8 +70,8 @@
   document.getElementById('logo').innerHTML = SECTIONS[0].icon;
   document.getElementById('level').innerHTML =
     `<svg width="18" height="18" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
-     Уровень ${level} <span style="color:#8a8f9e">·</span> ${n} из ${LESSONS.length} уроков`;
-  document.getElementById('tag').textContent = `${LESSONS.length} уроков · ${SECTIONS.length} программ`;
+     Уровень ${level} <span style="color:#8a8f9e">·</span> ${n} из ${LESSONS.length} ${lessonsOf(LESSONS.length)}`;
+  document.getElementById('tag').textContent = `${LESSONS.length} ${lessonsWord(LESSONS.length)} · ${SECTIONS.length} программ`;
 
   const go = document.getElementById('go');
   if (next) {
@@ -76,16 +92,20 @@
     const ls = of(s), d = ls.filter(isDone).length, won = d === ls.length;
     return `<div class="medal ${won ? 'won' : ''}" style="--c:${s.color}">
       <span class="coin">${s.icon}</span><b>${s.title}</b>
-      <small>${won ? 'Медаль твоя!' : `Ещё ${ls.length - d} ${ls.length - d === 1 ? 'урок' : ls.length - d < 5 ? 'урока' : 'уроков'}`}</small>
+      <small>${won ? 'Медаль твоя!' : `Ещё ${ls.length - d} ${lessonsWord(ls.length - d)}`}</small>
     </div>`;
   }).join('');
   document.getElementById('trophy').innerHTML = medals === SECTIONS.length
     ? `<span class="cup won"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="#ffd84d" stroke="#1c1f2e" stroke-width="2" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span><b>Мастер компьютера!</b> Все медали собраны.`
     : `<span class="cup"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></span>Собери все ${SECTIONS.length} медалей и получи кубок «Мастер компьютера».`;
 
+  const NUM_WORDS = ['', 'Один', 'Два', 'Три', 'Четыре', 'Пять', 'Шесть', 'Семь', 'Восемь', 'Девять', 'Десять'];
+  document.getElementById('worlds-title').textContent =
+    `${NUM_WORDS[SECTIONS.length] || SECTIONS.length} ${plural(SECTIONS.length, 'мир', 'мира', 'миров')}`;
+
   document.getElementById('worlds').innerHTML = SECTIONS.map(s => {
     const ls = of(s), d = ls.filter(isDone).length;
-    return `<a class="world" href="#${s.id}" style="--c:${s.color}">${s.icon}<b>${s.title}</b><small>${ls.length} ${ls.length === 1 ? 'урок' : ls.length < 5 ? 'урока' : 'уроков'}</small>
+    return `<a class="world" href="#${s.id}" style="--c:${s.color}">${s.icon}<b>${s.title}</b><small>${ls.length} ${lessonsWord(ls.length)}</small>
       <div class="bar"><i style="width:${100 * d / ls.length}%"></i></div><span class="n">${d} из ${ls.length}</span></a>`;
   }).join('');
 
